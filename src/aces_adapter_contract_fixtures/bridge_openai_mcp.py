@@ -4,32 +4,32 @@ from __future__ import annotations
 
 import importlib.resources as resources
 import json
+import logging
 from collections.abc import Callable, Sequence
 from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, ConfigDict
-from saber.agents.bridge_tracking import create_tracking_filter
-from saber.agents.bridge_utils import (
+from saber.ext import (
+    AgentCapabilities,
     build_bridged_tools,
     build_system_prompt,
     build_user_prompt,
     compose_filters,
     create_tool_call_limit_filter,
+    create_tracking_filter,
     parse_bridge_stderr,
     record_bridge_summary,
     resolve_model_aliases,
     tool_call_limit,
     validate_model_availability,
 )
-from saber.agents.models import AgentCapabilities
-from saber.logging import get_logger
 
 if TYPE_CHECKING:
     from inspect_ai.solver import Solver
     from inspect_ai.tool import Tool
     from inspect_ai.tool._mcp._config import MCPServerConfigHTTP
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 AGENT_CAPABILITIES = AgentCapabilities(supports_tools=True)
 

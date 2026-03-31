@@ -6,7 +6,7 @@ from collections.abc import Callable, Sequence
 from typing import TYPE_CHECKING
 
 from inspect_ai.model import ChatMessageSystem, get_model
-from saber.agents.models import AgentCapabilities
+from saber.ext import AgentCapabilities
 
 if TYPE_CHECKING:
     from inspect_ai.solver import Generate, Solver, TaskState

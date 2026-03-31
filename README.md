@@ -72,6 +72,10 @@ After that, ACES should be able to resolve these entry points:
 
 The bridge fixture intentionally uses a custom in-sandbox runner instead of re-exporting ACES's built-in Copilot or Claude integrations. The point is to validate the contract honestly from an **external** package, not to disguise a built-in under a new entry point.
 
+The bridge fixture now imports its reusable bridge helpers from the public
+`saber.ext` surface rather than reaching into ACES internal helper modules
+directly.
+
 The bridge fixture also **does not salvage partial bridge state on runner failure**. If the in-sandbox runner exits non-zero, the fixture raises and lets ACES / Inspect account for the sample error directly.
 
 ## Current boundary
