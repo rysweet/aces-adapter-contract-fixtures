@@ -1,0 +1,71 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aces-adapter-contract-fixtures"
+version = "0.1.0"
+description = "External fixtures that validate the ACES External Bridge Adapter Contract"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = { text = "MIT" }
+authors = [{ name = "rysweet" }]
+dependencies = [
+    "inspect-ai>=0.3.201",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.10.0",
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.11.0",
+]
+
+[project.entry-points."saber.agents"]
+fixture_briefing = "aces_adapter_contract_fixtures.briefing:create_agent"
+fixture_bridge_openai_mcp = "aces_adapter_contract_fixtures.bridge_openai_mcp:create_agent"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aces_adapter_contract_fixtures"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["aces_adapter_contract_fixtures"]
+
+[tool.mypy]
+python_version = "3.11"
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src:$MYPY_CONFIG_FILE_DIR/../aces/src"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = ["saber.*"]
+follow_imports = "skip"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+asyncio_mode = "auto"
+pythonpath = ["src", "../aces/src"]
+testpaths = ["tests"]
